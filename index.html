@@ -1,355 +1,343 @@
-<!DOCTYPE html>
-<html lang="uz">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>O‘nli Kasrlar – Kosmik Dars</title>
-
-<script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
-<style>
-:root{
---primary:#8b5cf6;
---secondary:#06b6d4;
---gold:#d4af37;
-}
-
-*{
-margin:0;
-box-sizing:border-box;
-font-family:Segoe UI,sans-serif;
-}
-
-body{
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-overflow:hidden;
-background:radial-gradient(circle at top,#0f172a,#020617);
-}
-
-/* Stars */
-.stars{
-position:fixed;
-width:100%;
-height:100%;
-z-index:-1;
-}
-
-.star{
-position:absolute;
-width:2px;
-height:2px;
-background:white;
-animation:starMove linear infinite;
-}
-
-@keyframes starMove{
-from{transform:translateY(0);}
-to{transform:translateY(100vh);}
-}
-
-/* Slider */
-.slider{
-width:95%;
-max-width:1100px;
-height:720px;
-background:white;
-border-radius:25px;
-overflow:hidden;
-display:flex;
-flex-direction:column;
-box-shadow:0 40px 100px rgba(0,0,0,.7);
-}
-
-.progress{
-height:6px;
-background:#ddd;
-}
-
-#progressBar{
-height:100%;
-width:0%;
-background:linear-gradient(90deg,#f59e0b,#ef4444);
-transition:.4s;
-}
-
-.slides{
-flex:1;
-position:relative;
-}
-
-.slide{
-position:absolute;
-width:100%;
-height:100%;
-padding:40px;
-display:none;
-flex-direction:column;
-overflow-y:auto;
-}
-
-.slide.active{
-display:flex;
-animation:fade .6s ease;
-}
-
-@keyframes fade{
-from{opacity:0;transform:translateX(40px);}
-to{opacity:1;transform:translateX(0);}
-}
-
-h1{
-color:var(--primary);
-border-bottom:4px solid var(--gold);
-padding-bottom:10px;
-margin-bottom:15px;
-}
-
-.box{
-background:#eef2ff;
-padding:15px;
-border-radius:12px;
-margin:10px 0;
-}
-
-input{
-padding:8px;
-border-radius:6px;
-border:1px solid #ccc;
-}
-
-button{
-padding:10px 20px;
-border:none;
-border-radius:8px;
-background:linear-gradient(45deg,var(--primary),var(--secondary));
-color:white;
-cursor:pointer;
-margin-top:10px;
-}
-
-button:disabled{
-background:#ccc;
-}
-
-/* Golden Certificate */
-.certificate-wrapper{
-display:flex;
-justify-content:center;
-}
-
-.certificate{
-width:820px;
-padding:50px;
-background:linear-gradient(135deg,#fff8e7,#f9f1da);
-border:12px solid #d4af37;
-border-radius:20px;
-text-align:center;
-position:relative;
-box-shadow:0 0 40px rgba(0,0,0,0.5);
-}
-
-.cert-title{
-font-size:42px;
-font-weight:bold;
-color:#8b5cf6;
-}
-
-.student-name{
-font-size:36px;
-margin:20px 0;
-font-weight:bold;
-color:#06b6d4;
-}
-
-.cert-topic{
-font-size:26px;
-font-weight:bold;
-color:#f59e0b;
-}
-
-.grade{
-font-size:24px;
-margin-top:15px;
-color:#f59e0b;
-font-weight:bold;
-}
-
-#qrcode{
-position:absolute;
-top:30px;
-right:30px;
-border:4px solid #333;
-padding:6px;
-background:white;
-}
-
-.controls{
-padding:15px;
-display:flex;
-justify-content:space-between;
-background:#f8fafc;
-}
-
-</style>
-</head>
-
-<body>
-
-<div class="stars" id="stars"></div>
-
-<div class="slider">
-
-<div class="progress">
-<div id="progressBar"></div>
-</div>
-
-<div class="slides">
-
-<div class="slide active">
-<h1>1. O‘nli kasr nima?</h1>
-
-<div class="box">
-O‘nli kasr — maxraji 10, 100, 1000, 10000 kabi 10 ning darajalari bo‘lgan kasr.
-Bu kasrlar vergul yordamida yoziladi.
-</div>
-
-<div class="formula">
-1/10 = 0.1<br>
-3/100 = 0.03<br>
-125/1000 = 0.125
-</div>
-
-<div class="box">
-O‘nli kasr ikki qismdan iborat: butun qism va kasr qism.
-Masalan: 4.25 → 4 butun, 25 yuzdan biri.
-</div>
-</div>
-
-<!-- 2 -->
-<div class="slide">
-<h1>2. Yozish qoidasi</h1>
-
-<div class="box">
-Kasr qismdagi raqamlar soni maxrajdagi nol soniga teng bo‘ladi.
-</div>
-
-<div class="formula">
-7/100 = 0.07<br>
-9/10 = 0.9<br>
-45/1000 = 0.045
-</div>
-
-<div class="box">
-Agar yetarli raqam bo‘lmasa boshiga nol qo‘shiladi.
-</div>
-</div>
-
-<!-- 3 -->
-<div class="slide">
-<h1>3. Taqqoslash</h1>
-
-<div class="box">
-Avval butun qismlar solishtiriladi.
-Agar teng bo‘lsa kasr qism solishtiriladi.
-</div>
-
-<div class="formula">
-8.5 > 7.9<br>
-0.75 > 0.5<br>
-0.50 = 0.5
-</div>
-</div>
-
-<!-- 4 -->
-<div class="slide">
-<h1>4. Qo‘shish va Ayirish</h1>
-
-<div class="box">
-Vergullar bir ustunda yoziladi va oddiy qo‘shish bajariladi.
-</div>
-
-<div class="formula">
-2.50 + 1.25 = 3.75<br>
-5.4 - 2.1 = 3.3<br>
-7.85 + 0.15 = 8.00
-</div>
-</div>
-
-<!-- 5 -->
-<div class="slide">
-<h1>5. Ko‘paytirish va Bo‘lish</h1>
-
-<div class="box">
-10 ga ko‘paytirishda vergul o‘ngga, bo‘lishda chapga suriladi.
-</div>
-
-<div class="formula">
-3.6 × 10 = 36<br>
-4.5 ÷ 10 = 0.45<br>
-2.35 × 100 = 235
-</div>
-</div>
-
-<div class="slide">
-<h1 >Test</h1>
-<h1><a href="test.html" >"⬅ Test sahifaga otish"</a></h1>
-</div>
-
-</div>
-
-<div class="controls">
-<button id="prev" onclick="move(-1)" disabled>Orqaga</button>
-<span id="counter"></span>
-<button id="next" onclick="move(1)">Oldinga</button>
-</div>
-
-</div>
-
-<script>
-let index=0;
-const slides=document.querySelectorAll(".slide");
-const progress=document.getElementById("progressBar");
-const counter=document.getElementById("counter");
-
-function updateUI(){
-progress.style.width=((index+1)/slides.length)*100+"%";
-counter.innerText=(index+1)+" / "+slides.length;
-
-prev.disabled=index===0;
-next.disabled=index===slides.length-1;
-}
-
-function move(step){
-slides[index].classList.remove("active");
-index+=step;
-
-if(index<0) index=0;
-if(index>=slides.length) index=slides.length-1;
-
-slides[index].classList.add("active");
-updateUI();
-}
-
-/* Stars */
-const stars=document.getElementById("stars");
-for(let i=0;i<200;i++){
-let s=document.createElement("div");
-s.className="star";
-s.style.left=Math.random()*100+"%";
-s.style.top=Math.random()*100+"%";
-s.style.animationDuration=(5+Math.random()*10)+"s";
-stars.appendChild(s);
-}
-
-/* Test */
-
-
-</script>
-
-</body>
+<!doctype html>
+<html lang="kk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ондық бөлшектер – Ғарыштық сабақ</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <style>
+      :root {
+        --primary: #8b5cf6;
+        --secondary: #06b6d4;
+        --gold: #d4af37;
+      }
+
+      * {
+        margin: 0;
+        box-sizing: border-box;
+        font-family: Segoe UI, sans-serif;
+      }
+
+      body {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        background: radial-gradient(circle at top, #0f172a, #020617);
+      }
+
+      .stars {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+      }
+
+      .star {
+        position: absolute;
+        width: 2px;
+        height: 2px;
+        background: white;
+        animation: starMove linear infinite;
+      }
+
+      @keyframes starMove {
+        from { transform: translateY(0); }
+        to { transform: translateY(100vh); }
+      }
+
+      .slider {
+        width: 95%;
+        max-width: 1100px;
+        height: 720px;
+        background: white;
+        border-radius: 25px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 40px 100px rgba(0,0,0,0.7);
+      }
+
+      .progress {
+        height: 6px;
+        background: #ddd;
+      }
+
+      #progressBar {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg,#f59e0b,#ef4444);
+        transition: 0.4s;
+      }
+
+      .slides {
+        flex: 1;
+        position: relative;
+      }
+
+      .slide {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        padding: 40px;
+        display: none;
+        flex-direction: column;
+        overflow-y: auto;
+      }
+
+      .slide.active {
+        display: flex;
+        animation: fade 0.6s ease;
+      }
+
+      @keyframes fade {
+        from { opacity: 0; transform: translateX(40px); }
+        to { opacity: 1; transform: translateX(0); }
+      }
+
+      h1 {
+        color: var(--primary);
+        border-bottom: 4px solid var(--gold);
+        padding-bottom: 10px;
+        margin-bottom: 15px;
+      }
+
+      .box {
+        background: #eef2ff;
+        padding: 15px;
+        border-radius: 12px;
+        margin: 10px 0;
+      }
+
+      table {
+        border-collapse: collapse;
+        width: 400px;
+        background: rgba(255,255,255,0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        overflow: hidden;
+      }
+
+      th, td {
+        padding: 15px;
+        text-align: center;
+        border-bottom: 1px solid rgba(0,0,0,0.1);
+      }
+
+      th {
+        background: rgba(0,0,0,0.2);
+        color: white;
+      }
+
+      tr:hover {
+        background: rgba(0,0,0,0.05);
+      }
+
+      button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        background: linear-gradient(45deg,var(--primary),var(--secondary));
+        color: white;
+        cursor: pointer;
+        margin-top: 10px;
+      }
+
+      button:disabled {
+        background: #ccc;
+      }
+
+      .controls {
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        background: #f8fafc;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="stars" id="stars"></div>
+
+    <div class="slider">
+      <div class="progress">
+        <div id="progressBar"></div>
+      </div>
+
+      <div class="slides">
+
+        <div class="slide active">
+          <h1>🌿 Ондық бөлшектер – Ашық сабақ</h1>
+
+          <div class="box">
+            📌 Пәні: Математика<br />
+            📌 Сыныбы: 5-сынып<br />
+            📌 Тақырыбы: Ондық бөлшектер<br />
+            📌 Сабақ түрі: Ашық сабақ<br />
+          </div>
+
+          <div class="box">
+            🎯 Мақсаты:<br />
+            • Ондық бөлшектерді түсіну<br />
+            • Өмірлік мысалдар арқылы үйрену<br />
+            • Қосу және азайтуды білу
+          </div>
+        </div>
+
+        <div class="slide">
+          <h1>2. Ондық бөлшек деген не?</h1>
+
+          <div class="box">
+            🔹 Ондық бөлшек — ондық бөлшектерді көрсету тәсілі.<br />
+            🔹 Бүтін бөлік (сол жақта) және бөлшек бөлік (оң жақта) болады.
+          </div>
+
+          <div class="box">
+            ➡️ 3.25 — мұнда<br />
+            ✔ 3 — бүтін бөлік<br />
+            ✔ .25 — ондық бөлік
+          </div>
+
+          <img src="./images/onlikasr.jpg" style="width:600px;border-radius:15px;margin-top:20px"/>
+
+          <div class="box">
+            Егер жеткілікті сан болмаса, алдына нөл қосылады.
+          </div>
+        </div>
+
+        <div class="slide">
+          <h1>3. Ондық бөлшектер қайда кездеседі?</h1>
+
+          <div class="box">
+            🍎 Алма — 2.50 теңге<br />
+            🥛 Сүт — 5.75 теңге<br />
+            🍫 Шоколад — 3.40 теңге
+          </div>
+
+          <img src="./images/pul.jpg" style="width:600px;border-radius:15px;margin-top:20px"/>
+
+          <h1>⚖️ Салмақ және қашықтық</h1>
+
+          <div class="box">
+            📦 Пакет — 2.75 кг<br />
+            🏃 Қашықтық — 0.5 км<br />
+            🧃 Шырын — 1.25 L
+          </div>
+
+          <img src="./images/ogirlik.jpg" style="width:600px;border-radius:15px;margin-top:20px"/>
+        </div>
+
+        <div class="slide">
+          <h1>4. Ондық бөлшектердің жазылуы және оқылуы</h1>
+
+          <div class="box">
+            Егер бір ғана сан болса – оннан бір деп оқылады.<br>
+            Егер екі сан болса – жүзден бір деп оқылады.
+          </div>
+
+          <div class="box">
+            <b>📌 Оқу тәртібі:</b><br>
+            Бүтін бөлік – бүтін ретінде оқылады.<br>
+            Үтір «бүтін» немесе «үтір» деп айтылады.<br>
+            Бөлшек бөлік – разрядтармен оқылады.
+          </div>
+
+          <table>
+            <tr>
+              <th>Жазылуы</th>
+              <th>Оқылуы</th>
+            </tr>
+
+            <tr>
+              <td>0,5</td>
+              <td>нөл бүтін бестен бір</td>
+            </tr>
+
+            <tr>
+              <td>2,3</td>
+              <td>екі бүтін оннан үш</td>
+            </tr>
+
+            <tr>
+              <td>4,25</td>
+              <td>төрт бүтін жүзден жиырма бес</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="slide">
+          <h1>5. Ондық бөлшектің құрылымы</h1>
+
+          <div class="box">
+            <b>Ондық бөлшек 2 бөліктен тұрады:</b><br>
+            ✅ Бүтін бөлік – үтірдің алдындағы сан<br>
+            ✅ Бөлшек бөлік – үтірден кейінгі сан
+          </div>
+
+          <div class="box">
+            Мысал: 3,24<br>
+            3 → бүтін бөлік<br>
+            24 → бөлшек бөлік
+          </div>
+
+          <img src="./images/onlik.avif" style="width:600px;border-radius:15px;margin-top:20px"/>
+        </div>
+
+        <div class="slide">
+          <h1>Тест</h1>
+          <h1><a href="test.html">⬅ Тест бетке өту</a></h1>
+        </div>
+
+      </div>
+
+      <div class="controls">
+        <button id="prev" onclick="move(-1)" disabled>Артқа</button>
+        <span id="counter"></span>
+        <button id="next" onclick="move(1)">Алға</button>
+      </div>
+    </div>
+
+    <script>
+      let index = 0;
+      const slides = document.querySelectorAll('.slide');
+      const progress = document.getElementById('progressBar');
+      const counter = document.getElementById('counter');
+
+      function updateUI(){
+        progress.style.width = ((index+1)/slides.length)*100 + '%';
+        counter.innerText = (index+1) + ' / ' + slides.length;
+
+        prev.disabled = index === 0;
+        next.disabled = index === slides.length-1;
+      }
+
+      function move(step){
+        slides[index].classList.remove('active');
+        index += step;
+
+        if(index<0) index=0;
+        if(index>=slides.length) index=slides.length-1;
+
+        slides[index].classList.add('active');
+        updateUI();
+      }
+
+      /* Stars */
+      const stars=document.getElementById('stars');
+
+      for(let i=0;i<200;i++){
+        let s=document.createElement('div');
+        s.className='star';
+        s.style.left=Math.random()*100+'%';
+        s.style.top=Math.random()*100+'%';
+        s.style.animationDuration=(5+Math.random()*10)+'s';
+        stars.appendChild(s);
+      }
+    </script>
+  </body>
 </html>
